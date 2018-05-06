@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "681439910881",
+    "firebase_url": "https://helpercalendar-9c4d6.firebaseio.com",
+    "project_id": "helpercalendar-9c4d6",
+    "storage_bucket": "helpercalendar-9c4d6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681439910881:android:3d8877121dcb3aa4",
+        "android_client_info": {
+          "package_name": "com.yourcompany.helpercalendar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681439910881-4ivgr9smqsc92tl0s7o4fvjuek769533.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwI7VOfB-Eq60IYYjEDzR3QgBzA_jdyjM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
