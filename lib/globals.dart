@@ -6,11 +6,13 @@ import 'package:firebase_database/firebase_database.dart';
 bool isLoggedIn = false;
 FirebaseUser LoginedUser;
 class Database {
-  static Future<String> addCourse(String x,y,z) async {
+  static Future<String> addCourse(String name,class_name,day_name,time,count) async {
     var user_course = <String, dynamic>{
-      'course_name': x,
-      'course_class': y,
-      'course_code': z,
+      'course_name': name,
+      'course_class': class_name,
+      'course_day': day_name,
+      'course_time': time,
+      'course_count': count
     };
     DatabaseReference reference = FirebaseDatabase.instance
         .reference().child("users")

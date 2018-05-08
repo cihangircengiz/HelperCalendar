@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
@@ -25,7 +27,10 @@ class _CoursePageState extends State<CoursePage> {
     return new Scaffold(
       floatingActionButton: new FloatingActionButton(
         child: new Icon(Icons.add),
-        onPressed: addButton,
+        onPressed: () {
+          Navigator.push(context,
+          new MaterialPageRoute(builder: (context) => new addCourse()));
+        },
       ),
       body: body(),
     );
@@ -70,9 +75,103 @@ Widget body() {
   }
   return body;
 }
-void addButton(){
-  Database.addCourse("Calculus","M203","MATH 153");
+
+////// Add CourseScreen
+
+class addCourse extends StatefulWidget {
+  @override
+  addCourseState createState() {
+    return new addCourseState();
+  }
 }
+
+class addCourseState extends State<addCourse> {
+  DateTime _date = new DateTime(2018);
+  TimeOfDay _time = new TimeOfDay(hour: 09, minute: 00);
+
+  static final TextEditingController _courseName = new TextEditingController();
+  static final TextEditingController _courseClass = new TextEditingController();
+  static final TextEditingController _courseCount = new TextEditingController();
+
+  var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(context: context,
+        initialDate: _date, firstDate: new DateTime(2018), lastDate: new DateTime(2019)
+    );
+    if(picked != null && picked != _date) {
+      setState(() {
+        _date = picked;
+      });
+      print("Date selected: ${days[_date.weekday%7]}");
+    }
+  }
+  Future<Null> _selectTime(BuildContext context) async {
+    final TimeOfDay picked = await showTimePicker(context: context, initialTime: _time);
+    if(picked !=null && picked !=_time){
+      setState(() {
+        _time = picked;
+      });
+      print("Time Selected:"+_time.toString());
+    }
+  }
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("Add Course Screen"),
+        actions: <Widget>[
+          new IconButton(icon: const Icon(Icons.save), onPressed: () {
+            Database.addCourse(_courseName.text,_courseClass.text,days[_date.weekday%7],_time.toString(),_courseCount.text);
+            Navigator.pop(context);
+
+          })
+        ],
+      ),
+      body: new Center(
+        child: new Column(
+          children: <Widget>[
+            new TextField(
+              decoration:  new InputDecoration(
+                hintText: "Course Name",
+              ),
+              controller: _courseName,
+            ),
+            new TextField(
+              decoration: new InputDecoration(
+                hintText: "Course Class"
+              ),
+              controller: _courseClass,
+            ),
+            new Row(
+              children: <Widget>[
+                new Text("Day Selected: ${days[_date.weekday%7]}"),
+                new Container(width: 15.0),
+                new RaisedButton(child:new Text("Select Date"),onPressed: (){_selectDate(context);}),
+              ],
+              mainAxisAlignment: MainAxisAlignment.end,
+            ),
+            new Row(
+              children: <Widget>[
+                new Text("Start Time: "+ _time.hour.toString()+":"+_time.minute.toString()),
+                new Container(width: 15.0),
+                new RaisedButton(child:new Text("Select Time"),onPressed: (){_selectTime(context);}),
+              ],
+              mainAxisAlignment: MainAxisAlignment.end,
+            ),
+            new TextField(
+              decoration: new InputDecoration(
+                hintText: "Course Count on these day",
+              ),
+              keyboardType: TextInputType.number,
+              controller: _courseCount,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 void DeleteCourse(String x){
   //print(x);
   Database.deleteCourses(x);
