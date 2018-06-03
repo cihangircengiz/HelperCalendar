@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'classes.dart';
+import 'notification.dart';
 class HomePage extends StatelessWidget{
   static String tag = "home-page";
   @override
@@ -11,6 +12,7 @@ class HomePage extends StatelessWidget{
           appBar: new AppBar(
             bottom: new TabBar(
               tabs: [
+                new Tab(icon: new Icon(Icons.today)),
                 new Tab(icon: new Icon(Icons.class_)),
                 new Tab(icon: new Icon(Icons.alarm)),
               ],
@@ -20,14 +22,12 @@ class HomePage extends StatelessWidget{
           body: new TabBarView(
             children: [
               CoursePage(),
-              new Icon(Icons.directions_transit),
+              NotificationPage(),
             ],
           ),
         ),
       ),
     );
   }
-void addClass(){
-   // globals.Database.addCourse();
-}
+
 }

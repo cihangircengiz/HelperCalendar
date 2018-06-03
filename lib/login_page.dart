@@ -12,9 +12,9 @@ class LoginPageState extends State<LoginPage>{
   @override
   static final TextEditingController _email = new TextEditingController();
   static final TextEditingController _pass = new TextEditingController();
-  /* String get email => _email.text;
+  /*String get email => _email.text;
   String get pass => _pass.text;
-  */
+*/
   String get email => "nowdyle@gmail.com";
   String get pass => "123456";
 

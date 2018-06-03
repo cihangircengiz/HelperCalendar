@@ -9,6 +9,7 @@ class CoursePage extends StatefulWidget {
   _CoursePageState createState() => new _CoursePageState();
 }
 Query _query;
+var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 class _CoursePageState extends State<CoursePage> {
   @override
   void initState() {
@@ -23,7 +24,9 @@ class _CoursePageState extends State<CoursePage> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime _today = new DateTime.now();
     return new Scaffold(
+      appBar: new AppBar(title: new Text(days[_today.weekday]),backgroundColor: new Color(1),),
       floatingActionButton: new FloatingActionButton(
         child: new Icon(Icons.add),
         onPressed: () {
@@ -91,8 +94,6 @@ class addCourseState extends State<addCourse> {
   static final TextEditingController _courseName = new TextEditingController();
   static final TextEditingController _courseClass = new TextEditingController();
   static final TextEditingController _courseCount = new TextEditingController();
-
-  var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(context: context,
         initialDate: _date, firstDate: new DateTime(2018), lastDate: new DateTime(2019)
@@ -110,7 +111,7 @@ class addCourseState extends State<addCourse> {
       setState(() {
         _time = picked;
       });
-      print("Time Selected:"+_time.toString());
+      print(_time.hour+(_time.minute/100));
     }
   }
   @override
@@ -120,7 +121,7 @@ class addCourseState extends State<addCourse> {
         title: new Text("Add Course Screen"),
         actions: <Widget>[
           new IconButton(icon: const Icon(Icons.save), onPressed: () {
-            Database.addCourse(_courseName.text,_courseClass.text,days[_date.weekday%7],_time.toString(),_courseCount.text);
+            Database.addCourse(_courseName.text,_courseClass.text,days[_date.weekday%7],_time.hour+(_time.minute/100),_courseCount.toString());
             Navigator.pop(context);
 
           })
@@ -172,6 +173,6 @@ class addCourseState extends State<addCourse> {
 }
 
 void DeleteCourse(String x){
-  //print(x);
+  print(x);
   Database.deleteCourses(x);
 }

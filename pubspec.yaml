@@ -13,6 +13,7 @@ dependencies:
   firebase_database: ^0.4.1
   firebase_core: any
   intl: ^0.15.2
+  scheduled_notifications: ^1.0.0
 
 dev_dependencies:
   flutter_test:
